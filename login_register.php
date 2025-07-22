@@ -1,16 +1,19 @@
-<?php require_once(__DIR__ . '/shared/header.php'); ?>
-
-    <link rel="stylesheet" href="/src/css/login_register.css">
-</head>
-
-<!-- Code starts here -->
-
 <?php
+    @session_start();
+
     #Se a sessão exister e não estiver vazia, direciona o usuário para a página central
     if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
-        require_once(__DIR__ . '/index.php');
+        header('location:/index.php');
+        exit();
     }
 ?>
+
+<!-- Código começa aqui -->
+
+<?php require_once(__DIR__ . '/shared/header.php'); ?>
+    
+    <link rel="stylesheet" href="/src/css/login_register.css">
+</head>
 
 <body>
     <!-- Header -->
@@ -24,6 +27,7 @@
         <div class="form">
             <form action="/src/controller/login_register_controller.php" method="POST">
                 <div class="title" id="title">
+                    <!-- Título que muda -->
                     <p id="p-title">Cadastrar-se</p>
                 </div>
 
@@ -56,17 +60,37 @@
                     </div>
 
                     <!-- Usado para falar para o php qual opção o usuário usou -->
-                    <input type="hidden" name="method" id="method">
+                    <input type="hidden" name="method" id="method" value="register">
                 
                     <div class="buttons">
-                        <button type="submit" id="button">Cadastrar-se</button>
+                        <button type="submit" id="button-submit">Cadastrar-se</button>
                     </div>
 
+                    <!-- Error -->
                     <div class="error">
                         <?php
                             if(isset($_REQUEST['error'])){
-                                if($_REQUEST['error'] === 'empty'){
-                                    echo '<p>Erro! Todos os campos devem ser preenchidos!</p>';
+                                #Switch para verificar cada erro
+                                switch($_REQUEST['error']){
+                                    case 'empty':
+                                        echo '<p>Por favor, preencha todos os campos!</p>';
+                                        break;
+
+                                    case 'wrong_password':
+                                        echo '<p>Senha incorreta! Tente novamente.</p>';
+                                        break;
+
+                                    case 'user_not_found':
+                                        echo '<p>Usuário não encontrado. Tente se cadastrar.</p>';
+                                        break;
+
+                                    case 'pass_too_long':
+                                        echo '<p>Senha muito longa!</p>';
+                                        break;
+
+                                    default:
+                                        echo '<p>Ocorreu um erro!</p>';
+                                        break;
                                 }
                             }
                         ?>
@@ -74,6 +98,7 @@
                 </div>
             </form>
 
+            <!-- Botão para mudar de Login para Cadastro -->
             <div class="options">
                 <button onclick="change()" id="option" class="register">Já tem uma conta? Faça login!</button>
             </div>
@@ -88,6 +113,6 @@
 <!-- Javascript da página -->
 <script src="/src/js/login_register.js"></script>
 
-<!-- Code ends here -->
+<!-- Código termina aqui -->
 
 <?php require_once(__DIR__ . '/shared/footer.php'); ?>

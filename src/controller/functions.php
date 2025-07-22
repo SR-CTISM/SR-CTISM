@@ -1,6 +1,5 @@
 <?php
     #SQL
-
     function SQLCONNECTION(){
         $host = 'localhost';
         $user = 'root';

@@ -1,11 +1,12 @@
-#CREATE DATABASE SR_CTISM;
-#USE SR_CTISM;
+CREATE DATABASE IF NOT EXISTS SR_CTISM;
+USE SR_CTISM;
 
 #Tabela dos administradores
 CREATE TABLE IF NOT EXISTS administrador(
 	num INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(99) NOT NULL,
     email VARCHAR(99),
+    senha TEXT NOT NULL,
     cod BIGINT UNIQUE NOT NULL
 );
 
@@ -14,7 +15,7 @@ CREATE TABLE IF NOT EXISTS alunos(
 	num INT AUTO_INCREMENT PRIMARY KEY,
     matricula BIGINT UNIQUE NOT NULL,
     email VARCHAR(99),
-    senha varchar(8) NOT NULL
+    senha TEXT NOT NULL
 );
 
 #Tabela de mensagens
