@@ -37,11 +37,11 @@
                     </div>
 
                     <!-- Visível somente no modo cadastro -->
-                    <div class="tel" id="hide">
+                    <div class="email" id="hide">
                         <div class="custom-tooltip">
-                            <p>Somente formatos brasileiros aceitos. Ex: (55) 12345-6789</p>
+                            <p>Seu Email</p>
                         </div>
-                        <input type="tel" name="tel-input" id="tel-input" placeholder="Telefone">
+                        <input type="email" name="email-input" id="email-input" placeholder="Email">
                     </div>
 
                     <!-- Visível em qualquer modo -->
@@ -49,22 +49,33 @@
                         <div class="custom-tooltip">
                             <p>Dica: crie uma senha forte!</p>
                         </div>
-                        <input type="password" name="password" id="password" placeholder="Senha">
+                        <input type="password" name="password" id="password" placeholder="Senha" oninput="passLength()">
                         <button onclick="showPassword(event)" id="showpassword" class="password-span"><i class="fa-solid fa-eye"></i></button>
+                        <!-- Erro da senha -->
+                        <p id="p-error"></p>
                     </div>
 
                     <!-- Usado para falar para o php qual opção o usuário usou -->
                     <input type="hidden" name="method" id="method">
                 
                     <div class="buttons">
-                        <a href="/src/controller/login_register_controller.php" id="button">Cadastrar-se</a>
+                        <button type="submit" id="button">Cadastrar-se</button>
                     </div>
 
+                    <div class="error">
+                        <?php
+                            if(isset($_REQUEST['error'])){
+                                if($_REQUEST['error'] === 'empty'){
+                                    echo '<p>Erro! Todos os campos devem ser preenchidos!</p>';
+                                }
+                            }
+                        ?>
+                    </div>
                 </div>
             </form>
 
             <div class="options">
-                <button onclick="trocar()" id="option" class="cadastro">Já tem uma conta? Faça login!</button>
+                <button onclick="change()" id="option" class="register">Já tem uma conta? Faça login!</button>
             </div>
         </div>
     </main>

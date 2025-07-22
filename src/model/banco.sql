@@ -4,15 +4,17 @@
 #Tabela dos administradores
 CREATE TABLE IF NOT EXISTS administrador(
 	num INT AUTO_INCREMENT PRIMARY KEY,
-    nome varchar(99) NOT NULL,
-    cod INT UNIQUE NOT NULL
+    nome VARCHAR(99) NOT NULL,
+    email VARCHAR(99),
+    cod BIGINT UNIQUE NOT NULL
 );
 
 #Tabela dos alunos
 CREATE TABLE IF NOT EXISTS alunos(
 	num INT AUTO_INCREMENT PRIMARY KEY,
-    nome varchar(99) NOT NULL,
-    matricula INT UNIQUE NOT NULL
+    matricula BIGINT UNIQUE NOT NULL,
+    email VARCHAR(99),
+    senha varchar(8) NOT NULL
 );
 
 #Tabela de mensagens
@@ -20,7 +22,7 @@ CREATE TABLE IF NOT EXISTS mensagem(
 	num INT AUTO_INCREMENT PRIMARY KEY,
     upVotes INT DEFAULT 0,
     downVotes INT DEFAULT 0,
-    dono INT,
+    dono BIGINT,
     mensagem TEXT NOT NULL,
     
     FOREIGN KEY (dono) REFERENCES alunos(matricula)
@@ -30,7 +32,7 @@ CREATE TABLE IF NOT EXISTS mensagem(
 CREATE TABLE IF NOT EXISTS denuncias(
 	num INT PRIMARY KEY AUTO_INCREMENT,
     mensagem_id INT,
-    denunciante_id INT,
+    denunciante_id BIGINT,
     #UNIQUE para que se possa votar somente uma vez por mensagem
     UNIQUE (denunciante_id, mensagem_id),
     motivo TEXT,
@@ -42,8 +44,8 @@ CREATE TABLE IF NOT EXISTS denuncias(
 
 #Tabela de usuários banidos
 CREATE TABLE IF NOT EXISTS banidos(
-	id_banido INT ,
-    id_moderador INT,
+	id_banido BIGINT,
+    id_moderador BIGINT,
     PRIMARY KEY (id_banido, data_banimento_inicio),
     motivo TEXT,
     data_banimento_inicio DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -57,7 +59,7 @@ CREATE TABLE IF NOT EXISTS banidos(
 CREATE TABLE IF NOT EXISTS mensagens_mais_votadas(
 	cod INT PRIMARY KEY AUTO_INCREMENT,
 	id_mensagem INT,
-    id_dono INT,
+    id_dono BIGINT,
     #Não pode ser vazio pois precisa de no mínimo 1 voto
 	num_votos INT NOT NULL,
 	
